@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const connectDB = require('./src/config/db');
 const apiRoutes = require('./src/routes/api');
 const swaggerUi = require('swagger-ui-express');
@@ -10,6 +11,8 @@ connectDB();
 
 const app = express();
 app.use(express.json());
+
+app.use(cors());
 
 // Tambahkan variabel URL CDN untuk CSS Swagger
 const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
