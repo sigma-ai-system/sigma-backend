@@ -11,8 +11,15 @@ connectDB();
 const app = express();
 app.use(express.json());
 
-// Jalankan Swagger UI menggunakan dokumen YAML yang sudah di-parsing
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// Tambahkan variabel URL CDN untuk CSS Swagger
+const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
+
+// Setup Swagger UI dengan custom CSS
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, { customCssUrl: CSS_URL })
+);
 
 app.use('/api', apiRoutes);
 
