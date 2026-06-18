@@ -1,35 +1,23 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const cors = require('cors');
-const connectDB = require('./config/db.js');
-const apiRoutes = require('./routes/api.js');
+const connectDB = require('./src/config/db');
+const apiRoutes = require('./src/routes/api');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./src/config/swagger'); // Mengarah ke loader baru
 
-// Load environment variables
 dotenv.config();
-
-// Connect to MongoDB
 connectDB();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.use(cors()); 
-
-// Middleware for parsing JSON and URL-encoded data
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-// Root Route
-app.get('/', (req, res) => {
-  res.send('Welcome to the Express API!');
-});
+// Jalankan Swagger UI menggunakan dokumen YAML yang sudah di-parsing
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// API Routes
 app.use('/api', apiRoutes);
 
-// Start Server
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📑 Dokumentasi API tersedia di http://localhost:${PORT}/api-docs`);
 });
-
-module.exports = app;
