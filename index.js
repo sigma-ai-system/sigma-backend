@@ -14,14 +14,18 @@ app.use(express.json());
 
 app.use(cors());
 
-// Tambahkan variabel URL CDN untuk CSS Swagger
+// Tambahkan variabel URL CDN untuk CSS dan JS Swagger
 const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui.min.css";
+const JS_URL = [
+  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui-bundle.js",
+  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.3.0/swagger-ui-standalone-preset.js"
+];
 
-// Setup Swagger UI dengan custom CSS
+// Setup Swagger UI dengan custom CSS dan JS
 app.use(
   '/api-docs',
   swaggerUi.serve,
-  swaggerUi.setup(swaggerDocument, { customCssUrl: CSS_URL })
+  swaggerUi.setup(swaggerDocument)
 );
 
 app.use('/api', apiRoutes);
