@@ -25,7 +25,10 @@ const JS_URL = [
 app.use(
   '/api-docs',
   swaggerUi.serve,
-  swaggerUi.setup(swaggerDocument)
+  swaggerUi.setup(swaggerDocument, { 
+    customCssUrl: CSS_URL,
+    customJs: JS_URL
+  })
 );
 
 app.use('/api', apiRoutes);
