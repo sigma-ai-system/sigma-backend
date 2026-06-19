@@ -23,7 +23,7 @@ const createSkripsi = async (req, res) => {
 // @access  Private
 const getAllSkripsi = async (req, res) => {
   try {
-    const skripsi = await Skripsi.find({ user: req.user.id });
+    const skripsi = await Skripsi.find({ email: req.user.email });
     res.status(200).json({ success: true, count: skripsi.length, data: skripsi });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
